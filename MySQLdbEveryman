@@ -1,0 +1,100 @@
+CREATE TABLE tblMembers (
+    MemberID SERIAL,
+    MemberType ENUM('Free', 'Paid'),
+    DateAndTimeJoined TIMESTAMP,
+    MostRecentPayment TIMESTAMP,
+    SubscriptionExpiryDate TIMESTAMP,
+    Currency ENUM('USD', 'EUR', 'GBP', 'Other'),  -- You need to specify the currencies here
+    AmountPaid DECIMAL(10, 2),
+    EmailAddress CHAR(30),
+    RegistrationIPAddress CHAR(32),
+    DisplayName CHAR(15),
+    Password CHAR(15),
+    PasswordHint CHAR(30),
+    AccountBalance DECIMAL(10, 2),
+    NumberOfDaysMembership SMALLINT UNSIGNED,
+    MessagesCreatedSinceJoining SMALLINT UNSIGNED,
+    MessagesForwardedSinceJoining SMALLINT UNSIGNED,
+    MessagesIgnoredSinceJoining SMALLINT UNSIGNED,
+    MessagesReportedSinceJoining SMALLINT UNSIGNED
+);
+
+CREATE TABLE tblPasswordHistory (
+    MemberID SERIAL,
+    Password CHAR(15),
+    PasswordHint CHAR(30),
+    DateCreated TIMESTAMP
+);
+
+CREATE TABLE tblOpenPositions (
+    PrimaryKey SERIAL,
+    MemberId BIGINT UNSIGNED,
+    SecurityName CHAR(15),
+    TickerSymbol CHAR(4),
+    ISIN CHAR(12),
+    ExchangeName ENUM('London', 'Frankfurt', 'Nasdaq', 'Other'),  -- Specify the exchange names
+    MIC CHAR(4),
+    SecurityType ENUM('share', 'bond', 'commodity', 'future'),
+    PositionType ENUM('Long', 'Short'),
+    DatePurchased TIMESTAMP,
+    Quantity SMALLINT,
+    StrikePrice DECIMAL(10, 2),
+    NotionalTransactionCost DECIMAL(10, 2),
+    CurrentPrice DECIMAL(10, 2)
+);
+
+CREATE TABLE tblTransactions (
+    PrimaryKey SERIAL,
+    MemberId BIGINT UNSIGNED,
+    SecurityName CHAR(15),
+    TickerSymbol CHAR(4),
+    ISIN CHAR(12),
+    ExchangeName ENUM('London', 'Frankfurt', 'Nasdaq', 'Other'),  -- Specify the exchange names
+    MIC CHAR(4),
+    SecurityType ENUM('share', 'bond', 'commodity', 'future'),
+    PositionType ENUM('Long', 'Short'),
+    DateOpened TIMESTAMP,
+    Quantity SMALLINT,
+    StrikePrice DECIMAL(10, 2),
+    NotionalTransactionCost DECIMAL(10, 2),
+    ClosePrice DECIMAL(10, 2),
+    DateClosed TIMESTAMP
+);
+
+CREATE TABLE tblPrimaryMessages (
+    MessageID SERIAL,
+    AuthorID BIGINT,
+    Security CHAR(12),
+    Content VARCHAR(2000)
+);
+
+CREATE TABLE tblForwardedMessage (
+    ThisMessageID SERIAL,
+    ParentMessageID BIGINT,
+    ForwarderID BIGINT,
+    Content VARCHAR(2000)
+);
+
+CREATE TABLE tblMessageLife (
+    PrimaryMessageID BIGINT,
+    ImmediateParentID BIGINT,
+    Recipient BIGINT,
+    Action ENUM('Pass-on', 'Pass-back', 'Ignore', 'Report')
+);
+
+CREATE TABLE tblMemberWarnings (
+    MemberID BIGINT,
+    DateOrWarning TIMESTAMP,
+    WarningText VARCHAR(2000),
+    AdditionalInfo VARCHAR(2000)
+);
+
+CREATE TABLE tblMemberBans (
+    MemberID BIGINT,
+    RegistrationIPAddress CHAR(32),
+    DisplayName CHAR(15),
+    Password CHAR(15),
+    PasswordHint CHAR(30),
+    DateBanned TIMESTAMP,
+    ReasonForBan VARCHAR(2000)
+);
