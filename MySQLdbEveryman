@@ -4,7 +4,7 @@ CREATE TABLE tblMembers (
     DateAndTimeJoined TIMESTAMP,
     MostRecentPayment TIMESTAMP,
     SubscriptionExpiryDate TIMESTAMP,
-    Currency ENUM('USD', 'EUR', 'GBP', 'Other'),  -- You need to specify the currencies here
+    Currency ENUM('USD', 'EUR', 'GBP', 'Other'),
     AmountPaid DECIMAL(10, 2),
     EmailAddress CHAR(30),
     RegistrationIPAddress CHAR(32),
@@ -32,7 +32,7 @@ CREATE TABLE tblOpenPositions (
     SecurityName CHAR(15),
     TickerSymbol CHAR(4),
     ISIN CHAR(12),
-    ExchangeName ENUM('London', 'Frankfurt', 'Nasdaq', 'Other'),  -- Specify the exchange names
+    ExchangeName ENUM('London', 'Frankfurt', 'Nasdaq', 'Other'),
     MIC CHAR(4),
     SecurityType ENUM('share', 'bond', 'commodity', 'future'),
     PositionType ENUM('Long', 'Short'),
@@ -49,7 +49,7 @@ CREATE TABLE tblTransactions (
     SecurityName CHAR(15),
     TickerSymbol CHAR(4),
     ISIN CHAR(12),
-    ExchangeName ENUM('London', 'Frankfurt', 'Nasdaq', 'Other'),  -- Specify the exchange names
+    ExchangeName ENUM('London', 'Frankfurt', 'Nasdaq', 'Other'), 
     MIC CHAR(4),
     SecurityType ENUM('share', 'bond', 'commodity', 'future'),
     PositionType ENUM('Long', 'Short'),
